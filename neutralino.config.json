@@ -1,0 +1,46 @@
+{
+  "applicationId": "js.neutralino.trilo",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "/public/",
+  "url": "http://localhost:3000",
+  "enableServer": true,
+  "enableNativeCalls": true,
+  "tokenSecurity": "none",
+  "logging": {
+    "enabled": true,
+    "path": "/logs/neutralinojs.log"
+  },
+  "modes": {
+    "window": {
+      "title": "Trilo",
+      "width": 1280,
+      "height": 800,
+      "minWidth": 800,
+      "minHeight": 600,
+      "icon": "/public/icon.png",
+      "enableInspector": true,
+      "borderless": true,
+      "maximize": false,
+      "hidden": false,
+      "alwaysOnTop": false,
+      "fullScreen": false,
+      "center": true
+    }
+  },
+  "cli": {
+    "binaryName": "trilo",
+    "resourcesPath": "/resources/",
+    "extensionsPath": "/extensions/",
+    "clientLibrary": "/public/neutralino.js",
+    "binaryVersion": "5.3.0",
+    "clientVersion": "5.3.0"
+  },
+  "extensions": [
+    {
+      "id": "js.neutralino.trilo.backend",
+      "command": "python -u backend/main.py"
+    }
+  ]
+}
