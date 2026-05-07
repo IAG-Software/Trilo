@@ -62,7 +62,7 @@ export default function Home() {
   const [selectedBoardId, setSelectedBoardId] = useState<string | null>(null);
   const [bgIndex, setBgIndex] = useState(0);
   const [boardBgIndex, setBoardBgIndex] = useState<number | null>(null);
-  const [userName, setUserName] = useState('Alexander');
+  const [userName, setUserName] = useState('User');
   const [boards, setBoards] = useState<any[]>([]);
   const [currentBoardData, setCurrentBoardData] = useState<any>(null);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -377,7 +377,7 @@ export default function Home() {
             <Button isIconOnly variant="light" size="sm" className="text-white/60 hover:text-white h-8 w-8 min-w-0">
               <Bell size={16} />
             </Button>
-            <Avatar size="sm" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" className="w-6 h-6 ml-1 cursor-pointer" />
+            <Avatar size="sm" icon={<User size={14} />} className="w-6 h-6 ml-1 cursor-pointer bg-white/10" />
             
             <div className="h-4 w-[1px] bg-white/10 mx-2" />
             
@@ -389,7 +389,7 @@ export default function Home() {
         <div className="h-14 px-6 flex items-center justify-between z-30">
           <div className="flex items-center gap-4">
             <h1 className="text-lg font-bold text-white">
-              {activeTab === 'home' ? 'Home' : activeTab === 'settings' ? 'Settings' : activeTab === 'switch' ? 'Board Gallery' : activeTab === 'dual' ? 'Split View' : (currentBoardData?.title || 'Trilo Core Development')}
+              {activeTab === 'home' ? 'Home' : activeTab === 'settings' ? 'Settings' : activeTab === 'switch' ? 'Board Gallery' : activeTab === 'dual' ? 'Split View' : (currentBoardData?.title || 'Board')}
             </h1>
             {activeTab === 'board' && (
               <>
@@ -401,14 +401,7 @@ export default function Home() {
                     <ChevronRight size={14} className="rotate-90 opacity-50" />
                   </Button>
                 </div>
-                <div className="flex items-center -space-x-2 ml-4">
-                  {[1, 2, 3].map(i => (
-                    <Avatar key={i} size="sm" className="w-7 h-7 border-2 border-black/20" src={`https://i.pravatar.cc/150?u=${i}`} />
-                  ))}
-                  <Button isIconOnly size="sm" className="w-7 h-7 min-w-0 rounded-full bg-white/10 text-white/80 text-[10px]">
-                    +12
-                  </Button>
-                </div>
+
                 <Button 
                   size="sm" 
                   variant="flat" 

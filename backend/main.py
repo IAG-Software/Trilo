@@ -109,31 +109,8 @@ def init_db():
     ''')
     conn.commit()
 
-    # Check if data exists, if not insert initial
-    cursor.execute("SELECT COUNT(*) FROM boards")
-    if cursor.fetchone()[0] == 0:
-        # Create a default board
-        board_id = 'board-default'
-        cursor.execute("INSERT INTO boards (id, title, bg_gradient) VALUES (?, ?, ?)", 
-                       (board_id, 'Trilo Core Development', 'from-blue-600/40 to-indigo-900/40'))
-        
-        initial_cols = [
-            ('col-1', board_id, 'Done', 'bg-emerald-500', 0),
-            ('col-2', board_id, 'Current Task', 'bg-amber-500', 1),
-            ('col-3', board_id, 'Awaiting', 'bg-red-500', 2),
-            ('col-4', board_id, 'Unable To add', 'bg-gray-400', 3)
-        ]
-        cursor.executemany("INSERT OR IGNORE INTO columns (id, board_id, title, dot_color, position) VALUES (?, ?, ?, ?, ?)", initial_cols)
-        
-        initial_tasks = [
-            ('task-1', 'col-1', 'Project Naming & Branding', 'bg-red-500', 0),
-            ('task-2', 'col-1', 'Launch the app Successfully', 'bg-green-500', 1),
-            ('task-3', 'col-1', 'Board Architecture', 'bg-green-500', 2),
-            ('task-4', 'col-2', 'UI Tuning', 'bg-emerald-500', 0),
-            ('task-5', 'col-3', 'Add AI Features', 'bg-red-500', 0),
-            ('task-6', 'col-3', 'flexibility', 'bg-orange-500', 1),
-        ]
-        cursor.executemany("INSERT OR IGNORE INTO tasks (id, column_id, content, priority_color, position) VALUES (?, ?, ?, ?, ?)", initial_tasks)
+    # Check if data exists - Removed demo data initialization for production-ready state
+    pass
         
     conn.commit()
     conn.close()

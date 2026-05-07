@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# database
+*.db
+*.db-journal
+
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# rust / tauri
+/src-tauri/target
+/src-tauri/binaries
+

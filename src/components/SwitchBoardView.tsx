@@ -168,11 +168,7 @@ export default function SwitchBoardView({ onSelectBoard, onCreateBoard }: {
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="flex -space-x-1.5">
-                        {[1, 2, 3].map(i => (
-                          <div key={i} className="w-5 h-5 rounded-full border border-black/40 bg-white/10 overflow-hidden">
-                            <img src={`https://i.pravatar.cc/150?u=${board.id}${i}`} className="w-full h-full object-cover" alt="User avatar" />
-                          </div>
-                        ))}
+                        {/* Member avatars would go here */}
                       </div>
                       <div className="flex items-center gap-1 text-white/40 group-hover:text-white/80 transition-colors">
                         <Layout size={12} />
