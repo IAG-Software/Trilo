@@ -5,40 +5,46 @@ import { Minus, Square, X, Copy } from 'lucide-react';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 
 export default function WindowControls() {
+  const [appWindow, setAppWindow] = useState<any>(null);
   const [isMaximized, setIsMaximized] = useState(false);
-  const appWindow = getCurrentWindow();
 
   useEffect(() => {
-    const updateMaximized = async () => {
-      setIsMaximized(await appWindow.isMaximized());
-    };
+    if (typeof window !== 'undefined') {
+      const win = getCurrentWindow();
+      setAppWindow(win);
 
-    updateMaximized();
-    
-    // Listen for resize events to update the maximized state
-    const unlisten = appWindow.onResized(() => {
+      const updateMaximized = async () => {
+        setIsMaximized(await win.isMaximized());
+      };
+
       updateMaximized();
-    });
+      
+      const unlisten = win.onResized(() => {
+        updateMaximized();
+      });
 
-    return () => {
-      unlisten.then(fn => fn());
-    };
-  }, [appWindow]);
+      return () => {
+        unlisten.then(fn => fn());
+      };
+    }
+  }, []);
 
   const handleMinimize = async () => {
-    await appWindow.minimize();
+    if (appWindow) await appWindow.minimize();
   };
 
   const handleMaximize = async () => {
-    if (await appWindow.isMaximized()) {
-      await appWindow.unmaximize();
-    } else {
-      await appWindow.maximize();
+    if (appWindow) {
+      if (await appWindow.isMaximized()) {
+        await appWindow.unmaximize();
+      } else {
+        await appWindow.maximize();
+      }
     }
   };
 
   const handleClose = async () => {
-    await appWindow.close();
+    if (appWindow) await appWindow.close();
   };
 
   return (
