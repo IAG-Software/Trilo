@@ -83,7 +83,6 @@ export default function Home() {
 
   const fetchStats = async () => {
     try {
-      // @ts-expect-error
       const data = await window.electronAPI?.cgiCall('get-home-stats', {});
       if (data && !data.error) setStats(data);
     } catch (err) {
@@ -93,7 +92,6 @@ export default function Home() {
 
   const fetchBoards = async () => {
     try {
-      // @ts-expect-error
       const data = await window.electronAPI?.cgiCall('get-boards', {});
       if (data && !data.error) setBoards(data);
     } catch (err) {
@@ -106,12 +104,10 @@ export default function Home() {
     fetchStats();
     const loadSettings = async () => {
       try {
-        // @ts-expect-error
-        const savedBg = await window.electronAPI?.cgiCall('get-setting', { key: 'bgIndex' });
+          const savedBg = await window.electronAPI?.cgiCall('get-setting', { key: 'bgIndex' });
         if (savedBg !== null && !savedBg.error) setBgIndex(parseInt(savedBg));
         
-        // @ts-expect-error
-        const savedName = await window.electronAPI?.cgiCall('get-setting', { key: 'userName' });
+          const savedName = await window.electronAPI?.cgiCall('get-setting', { key: 'userName' });
         if (savedName && !savedName.error) setUserName(savedName);
       } catch (err) {
         console.error('Failed to load settings:', err);
@@ -138,7 +134,6 @@ export default function Home() {
     if (activeTab === 'board' && selectedBoardId) {
       setBoardBgIndex(nextIndex);
       try {
-        // @ts-expect-error
         await window.electronAPI.cgiCall('update-board-wallpaper', { boardId: selectedBoardId, wallpaperIndex: nextIndex });
         // Refresh boards list to update gallery if needed
         fetchBoards();
@@ -148,7 +143,6 @@ export default function Home() {
     } else {
       setBgIndex(nextIndex);
       try {
-        // @ts-expect-error
         await window.electronAPI.cgiCall('save-setting', { key: 'bgIndex', value: nextIndex });
       } catch (err) {
         console.error('Failed to save background setting:', err);
@@ -162,7 +156,6 @@ export default function Home() {
       setActiveTab('board');
     }
     try {
-      // @ts-expect-error
       const boardData = await window.electronAPI.cgiCall('get-board', { boardId: id });
       if (boardData && !boardData.error) {
         setCurrentBoardData(boardData);
@@ -176,7 +169,6 @@ export default function Home() {
   const handleSaveBoardSettings = async (title: string, settings: any, wallpaperIndex: number | null) => {
     if (!selectedBoardId) return;
     try {
-      // @ts-expect-error
       await window.electronAPI.cgiCall('update-board-settings', { 
         boardId: selectedBoardId, 
         title, 
@@ -184,7 +176,6 @@ export default function Home() {
       });
       
       if (wallpaperIndex !== boardBgIndex) {
-        // @ts-expect-error
         await window.electronAPI.cgiCall('update-board-wallpaper', { 
           boardId: selectedBoardId, 
           wallpaperIndex 
@@ -203,7 +194,6 @@ export default function Home() {
   const handleCreateBoard = async () => {
     if (!newBoardTitle.trim()) return;
     try {
-      // @ts-expect-error
       const result = await window.electronAPI.cgiCall('create-board', { title: newBoardTitle });
       if (result && !result.error) {
         setNewBoardTitle('');
@@ -221,7 +211,6 @@ export default function Home() {
     if (!confirm('Are you sure you want to delete this board? This action cannot be undone.')) return;
     
     try {
-      // @ts-expect-error
       await window.electronAPI.cgiCall('delete-board', { boardId: selectedBoardId });
       setActiveTab('home');
       setSelectedBoardId(null);
@@ -236,7 +225,6 @@ export default function Home() {
     if (!confirm('CRITICAL: This will delete ALL your boards and tasks. Are you sure?')) return;
     
     try {
-      // @ts-expect-error
       await window.electronAPI.cgiCall('reset-db', {});
       window.location.reload();
     } catch (err) {
@@ -257,14 +245,12 @@ export default function Home() {
         const firstBoardId = boards[0].id;
         
         // Get board details to find the first column
-        // @ts-expect-error
         const boardData = await window.electronAPI.cgiCall('get-board', { boardId: firstBoardId });
         if (!boardData || boardData.error || !boardData.columnOrder.length) return;
         
         const firstColId = boardData.columnOrder[0];
         
-        // @ts-expect-error
-        await window.electronAPI.cgiCall('add-task', {
+          await window.electronAPI.cgiCall('add-task', {
           id: `task-${Math.random().toString(36).substr(2, 9)}`,
           columnId: firstColId,
           content: quickTaskContent,

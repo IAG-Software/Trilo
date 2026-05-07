@@ -66,7 +66,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
 
   const fetchBoard = async () => {
     try {
-      // @ts-ignore
       const board = await window.electronAPI.cgiCall('get-board', { boardId });
       if (board && board.error) {
         console.error('Backend error:', board.error);
@@ -105,8 +104,7 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
         // Update all positions or just the moved one? 
         // For simplicity, we can just sync the moved one's position, but backend might need re-positioning others.
         // Let's assume the backend handles position as an index.
-        // @ts-ignore
-        await window.electronAPI.cgiCall('update-column-pos', {
+          await window.electronAPI.cgiCall('update-column-pos', {
           columnId: draggableId,
           position: destination.index
         });
@@ -136,7 +134,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
 
     // Sync with backend
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('update-task-pos', {
         taskId: draggableId,
         columnId: destination.droppableId,
@@ -174,7 +171,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
 
     // Sync
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('add-task', {
         id: newId,
         columnId: columnId,
@@ -190,12 +186,10 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
 
   const handleAISuggest = async (columnId: string, columnName: string) => {
     try {
-      // @ts-ignore
       const suggestions = await window.electronAPI.cgiCall('ai-generate-tasks', { columnName });
       
       for (const task of suggestions) {
-        // @ts-ignore
-        await window.electronAPI.cgiCall('add-task', {
+          await window.electronAPI.cgiCall('add-task', {
           id: task.id,
           columnId: columnId,
           content: task.content,
@@ -219,7 +213,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
 
     // Sync
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('delete-task', { taskId });
     } catch (err) {
       console.error('Failed to delete task:', err);
@@ -240,7 +233,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
 
     // Sync
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('add-task', {
         id: newId,
         columnId: columnId,
@@ -269,7 +261,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
     onOpenChange(); // Close modal
 
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('update-task', {
         id: selectedTask.id,
         content: editingTaskContent,
@@ -323,7 +314,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
     setNewChecklistItem('');
     
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('add-checklist-item', {
         id: newItem.id,
         taskId: selectedTask.id,
@@ -351,7 +341,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
     
     const item = updatedChecklist.find(i => i.id === itemId);
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('update-checklist-item', {
         id: itemId,
         isCompleted: item?.isCompleted
@@ -386,7 +375,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
     setIsAddingList(false);
 
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('add-column', {
         id: newId,
         boardId: data.id,
@@ -408,7 +396,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
     setData(newData);
 
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('delete-column', { columnId });
     } catch (err) {
       console.error('Failed to delete column:', err);
@@ -423,7 +410,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
     setData(newData);
 
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('update-column', {
         id: columnId,
         title: newTitle
@@ -874,7 +860,6 @@ const KanbanBoard = forwardRef(({ boardId, isDualView = false, suppressContext =
                                           newData.tasks[task.id].priorityColor = nextColor;
                                           setData(newData);
                                           // Sync update
-                                          // @ts-ignore
                                           window.electronAPI.cgiCall('update-task', { ...task, priorityColor: nextColor });
                                         }},
                                         { label: 'Delete Card', icon: <Trash2 size={14} />, onClick: () => handleDeleteTask(task.id, column.id), variant: 'danger' },

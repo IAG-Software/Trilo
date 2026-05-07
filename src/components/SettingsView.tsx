@@ -54,6 +54,7 @@ import {
   Select,
   SelectItem,
   Badge,
+  Chip,
   Kbd,
   ScrollShadow
 } from '@nextui-org/react';
@@ -84,15 +85,12 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onUpdateName, onUpdateBg, c
   useEffect(() => {
     const loadSettings = async () => {
       try {
-        // @ts-ignore
         const res = await window.electronAPI.cgiCall('get-setting', { key: 'sidebarCollapsed' });
         if (res !== null) setSidebarCollapsed(res === 'true');
         
-        // @ts-ignore
         const res2 = await window.electronAPI.cgiCall('get-setting', { key: 'notificationsEnabled' });
         if (res2 !== null) setNotificationsEnabled(res2 === 'true');
 
-        // @ts-ignore
         const res3 = await window.electronAPI.cgiCall('get-setting', { key: 'glassIntensity' });
         if (res3 !== null) setGlassIntensity(parseInt(res3));
       } catch (err) {
@@ -104,7 +102,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onUpdateName, onUpdateBg, c
 
   const handleSaveSetting = async (key: string, value: any) => {
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('save-setting', { key, value: String(value) });
     } catch (err) {
       console.error(`Failed to save setting ${key}:`, err);
@@ -128,7 +125,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onUpdateName, onUpdateBg, c
 
   const handleBgSelect = async (index: number) => {
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('save-setting', { key: 'bgIndex', value: String(index) });
       onUpdateBg(index);
     } catch (err) {
@@ -139,7 +135,6 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onUpdateName, onUpdateBg, c
   const handleResetDb = async () => {
     if (confirm('Are you sure you want to reset the entire database? This will delete all boards, columns, and tasks.')) {
       try {
-        // @ts-ignore
         await window.electronAPI.cgiCall('reset-db', {});
         window.location.reload();
       } catch (err) {
@@ -430,7 +425,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onUpdateName, onUpdateBg, c
                   <motion.div variants={itemVariants} className="space-y-6">
                     <div className="flex items-center justify-between px-1">
                       <h3 className="text-xs font-black text-white/20 uppercase tracking-[0.2em]">Wallpapers</h3>
-                      <Badge content={BACKGROUNDS.length} color="primary" variant="flat" size="sm" />
+                      <Chip size="sm" variant="flat" color="primary" className="font-bold">{BACKGROUNDS.length}</Chip>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                       {BACKGROUNDS.map((thumb, i) => (
@@ -767,7 +762,7 @@ const SettingsView: React.FC<SettingsViewProps> = ({ onUpdateName, onUpdateBg, c
                             <h4 className="text-2xl font-black text-white">Next Generation Productivity</h4>
                             <p className="text-base text-white/40 font-medium">Crafted with Next.js, Electron, and Python.</p>
                           </div>
-                          <Badge content="Stable Release Candidate" color="primary" variant="flat" className="px-4 py-2 font-black text-xs" />
+                          <Chip size="sm" variant="flat" color="primary" className="px-4 py-2 font-black text-xs">Stable Release Candidate</Chip>
                         </div>
 
                         <p className="text-lg text-white/60 leading-relaxed max-w-2xl font-medium">

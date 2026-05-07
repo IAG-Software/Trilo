@@ -28,7 +28,6 @@ export default function SwitchBoardView({ onSelectBoard, onCreateBoard }: {
 
   const fetchBoards = React.useCallback(async () => {
     try {
-      // @ts-expect-error
       const data = await window.electronAPI.cgiCall('get-boards', {});
       if (data && !data.error) setBoards(data);
     } catch (err) {
@@ -44,7 +43,6 @@ export default function SwitchBoardView({ onSelectBoard, onCreateBoard }: {
 
   const toggleStar = async (boardId: string, currentStatus: boolean) => {
     try {
-      // @ts-ignore
       await window.electronAPI.cgiCall('update-board-starred', { boardId, isStarred: !currentStatus });
       fetchBoards();
     } catch (err) {

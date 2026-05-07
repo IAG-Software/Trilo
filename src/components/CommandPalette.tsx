@@ -65,7 +65,6 @@ const CommandPalette = ({ isOpen, onOpenChange, onSelectBoard, onNavigate, onCre
       
       searchTimeout.current = setTimeout(async () => {
         try {
-          // @ts-expect-error
           const data = await window.electronAPI.cgiCall('global-search', { query });
           setResults(data);
           setSelectedIndex(0);
