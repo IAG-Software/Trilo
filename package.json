@@ -10,7 +10,7 @@
     "neu:dev": "concurrently \"next dev\" \"wait-on http://localhost:3000 && pnpx @neutralinojs/neu run\"",
     "neu:build": "next build && pnpx @neutralinojs/neu build",
     "neu:update": "pnpx @neutralinojs/neu update",
-    "tauri": "tauri dev",
+    "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "next build && tauri build"
   },
